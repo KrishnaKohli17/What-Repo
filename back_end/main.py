@@ -191,3 +191,10 @@ async def chat_stream(request: ChatRequest):
         await asyncio.sleep(0.01)
 
     return StreamingResponse(generate_response(), media_type="text/event-stream")
+
+# 1. Find the path to the front_end folder
+current_dir = os.path.dirname(os.path.abspath(__file__))
+frontend_dir = os.path.join(current_dir, "..", "front_end")
+
+# 2. Tell FastAPI to serve your index.html when people visit the main URL
+app.mount("/", StaticFiles(directory=frontend_dir, html=True), name="frontend")
